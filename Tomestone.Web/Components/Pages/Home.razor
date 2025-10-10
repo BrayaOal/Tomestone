@@ -2,6 +2,47 @@
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Hello, Braya!</h1>
 
-Welcome to your new app.
+<form onsubmit="return false" >
+    <label>
+        <span>
+            Item Text
+        </span>
+
+        <input type="text"
+               @bind-value="ItemText" />
+    </label>
+
+    <button type="submit" @onclick="AddItem">
+        Add item
+    </button>
+</form>
+
+<ul>
+    @foreach(var item in Items)
+    {
+        <li>
+            @item
+        </li>
+    }
+</ul>
+
+@code
+{
+    List<string> Items { get; set; } = [];
+
+    string ItemText { get; set; }
+
+    void AddItem()
+    {
+        if (ItemText is "")
+        {
+            return;
+        }
+
+        Items.Add(ItemText);
+
+        ItemText = "";
+    }
+}
