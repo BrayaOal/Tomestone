@@ -14,35 +14,44 @@
                @bind-value="ItemText" />
     </label>
 
-    <button type="submit" @onclick="AddItem">
+    <button type="submit" @onclick="this.AddItem">
         Add item
     </button>
 </form>
 
 <ul>
-    @foreach(var item in Items)
+    @foreach(var item in this.Items)
     {
         <li>
             @item
+            <button style="border:none; background: none;"
+                @onclick="() => this.RemoveItem(item)">
+                ❌
+            </button>
         </li>
     }
 </ul>
 
 @code
 {
-    List<string> Items { get; set; } = [];
+    private List<string> Items { get; set; } = [];
 
-    string ItemText { get; set; }
+    private string ItemText { get; set; }
 
-    void AddItem()
+    private void AddItem()
     {
-        if (ItemText is "")
+        if (this.ItemText is "")
         {
             return;
         }
 
-        Items.Add(ItemText);
+        this.Items.Add(this.ItemText);
 
-        ItemText = "";
+        this.ItemText = "";
+    }
+
+    private void RemoveItem(string item)
+    {
+        this.Items.Remove(item);
     }
 }
