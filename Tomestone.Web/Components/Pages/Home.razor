@@ -7,7 +7,7 @@
 <form onsubmit="return false" >
     <label>
         <span>
-            Item Text
+            Description
         </span>
 
         <input type="text"
@@ -23,8 +23,23 @@
     @foreach(var item in this.Items)
     {
         <li>
-            @item
-            <button style="border:none; background: none;"
+            @{
+                var itemTextDecoration = "";
+                if (item.IsComplete)
+                {
+                    itemTextDecoration = "line-through";
+                }
+            }
+
+            <label style="text-decoration: @itemTextDecoration; user-select: none;">
+                <input type="checkbox" 
+                       checked="@item.IsComplete"
+                       @onchange="() => this.ToggleItem(item)" />
+
+                @item.Description
+            </label>
+
+            <button class="delete" style="border:none; background: none;"
                 @onclick="() => this.RemoveItem(item)">
                 ❌
             </button>
@@ -34,9 +49,9 @@
 
 @code
 {
-    private List<string> Items { get; set; } = [];
+    private List<ListItem> Items { get; set; } = [];
 
-    private string ItemText { get; set; }
+    private string ItemText { get; set; } = "";
 
     private void AddItem()
     {
@@ -45,13 +60,30 @@
             return;
         }
 
-        this.Items.Add(this.ItemText);
+        this.Items.Add(new ListItem(this.ItemText));
 
         this.ItemText = "";
     }
 
-    private void RemoveItem(string item)
+    private void RemoveItem(ListItem item)
     {
         this.Items.Remove(item);
+    }
+
+    private void ToggleItem(ListItem item)
+    {
+        item.IsComplete = !item.IsComplete;
+    }
+
+    class ListItem
+    {
+        public ListItem(string newDescription)
+        {
+            this.Description = newDescription;
+        }
+
+        public string Description { get; set; }
+
+        public bool IsComplete { get; set; }
     }
 }
