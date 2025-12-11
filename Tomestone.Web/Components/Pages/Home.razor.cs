@@ -67,11 +67,4 @@ public partial class Home
 
         File.WriteAllText(ITEMS_FILE_PATH, itemsJson);
     }
-
-    private class ListItem
-    {
-        public required string Description { get; set; }
-
-        public bool IsComplete { get; set; }
-    }
 }

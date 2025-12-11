@@ -4,7 +4,7 @@
 
 <h1>Hello, Braya!</h1>
 
-<form onsubmit="return false" >
+<form onsubmit="return false">
     <label>
         <span>
             Description
@@ -20,19 +20,19 @@
 </form>
 
 <ul>
-    @foreach(var item in this.Items.OrderBy(item => item.IsComplete))
+    @foreach (var item in this.Items.OrderBy(item => item.IsComplete))
     {
         <li @key="item.Description">
             @{
-                var itemTextDecoration = "";
+                var itemTextDecoration = "auto";
                 if (item.IsComplete)
                 {
                     itemTextDecoration = "line-through";
                 }
             }
 
-            <label style="text-decoration: @itemTextDecoration; user-select: none;">
-                <input type="checkbox" 
+            <label style="text-decoration: @itemTextDecoration;">
+                <input type="checkbox"
                        checked="@item.IsComplete"
                        @onchange="() => this.ToggleItem(item)" />
 
@@ -40,7 +40,7 @@
             </label>
 
             <button class="delete" style="border:none; background: none;"
-                @onclick="() => this.RemoveItem(item)">
+                    @onclick="() => this.RemoveItem(item)">
                 ❌
             </button>
         </li>
