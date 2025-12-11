@@ -20,9 +20,9 @@
 </form>
 
 <ul>
-    @foreach(var item in this.Items)
+    @foreach(var item in this.Items.OrderBy(item => item.IsComplete))
     {
-        <li>
+        <li @key="item.Description">
             @{
                 var itemTextDecoration = "";
                 if (item.IsComplete)
